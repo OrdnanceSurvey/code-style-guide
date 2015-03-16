@@ -148,3 +148,5 @@ In general, these should be defined weak and setup within a class extension in t
 
 ##18. Third party libraries
 New third party libraries should be agreed with Ordnance Survey and proven to work/source code audited before adding it to the project. Please do not implement the library without prior approval.
+
+Do not use CocoaPods to install libraries. Please add libraries as dynamic frameworks. If you need to use a dependency manager, please use something non-invasive that won't cause breaking changes, like carthage. Dynamic frameworks should lower the need for a dependency manager, particularly one that can change the structure of your project.
