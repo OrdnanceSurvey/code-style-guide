@@ -30,6 +30,7 @@ KeepEmptyLinesAtTheStartOfBlocks: true
 NamespaceIndentation: None
 ObjCSpaceAfterProperty: true
 ObjCSpaceBeforeProtocolList: false
+ObjCBlockIndentWidth: 4
 PenaltyBreakBeforeFirstCallParameter: 19
 PenaltyBreakComment: 300
 PenaltyBreakString: 1000
