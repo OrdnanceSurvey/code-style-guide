@@ -63,6 +63,8 @@ All code should be peer reviewed before being merged to the main branch. Open a 
 
 The other developer should checkout, build (check for warnings/errors) and test the feature (including any layout changes) on a real device. Results of the test should be posted in the pull request by the other developer.
 
+Keep pull requests small and focused. Try to keep it to not more than 200 lines of code, in small, logical chunks. If your feature isn't ready to be merged back in to the main branch, branch from your feature branch and make pull requests back to your feature branch. Some useful advice can be found [here](http://www.pushing-pixels.org/2015/06/11/code-spiral.html)
+
 ##11. Breaking retain cycles in blocks
 Blocks can result in retain cycles and memory leaks if some variables are strongly captured within the block. For example
 
