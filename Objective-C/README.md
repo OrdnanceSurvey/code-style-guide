@@ -5,6 +5,8 @@ The aim of this document is to ensure a consistent style guide across our code b
 ##1. Consistent Code Base
 We use [clang-format](http://clang.llvm.org/docs/ClangFormat.html) to ensure consistency across our code base, specifically using the attached [config file](.clang-format). There is an Xcode plugin available for clang-format available [here](https://github.com/travisjeffery/ClangFormat-Xcode), which can also be installed using [Alcatraz](http://alcatraz.io/). Once installed, simply save the .clang-format file to your HOME directory, or commit it within the project's directory, then in the Edit->Clang Format menu in Xcode choose File, and then choose Enable Format on Save.
 
+Due to changes in clang-format 3.7 that we didn't like, we have a custom build of clang-format in this repository that allows us to format blocks in the way specified in this document. It is available in this repository, [here](clang-format). To use it in the Xcode plugin, copy it to ~/Library/Application Support/Developer/Shared/Xcode/Plug-ins/ClangFormat.xcplugin/Contents/Resources.
+
 ##2. Line Length
 Our clang format configuration doesn't specify a hard line length. Try to keep the line length reasonable, but also bear in mind we all have large screens. No line should need to be scrolled to be read.
 

@@ -31,6 +31,7 @@ NamespaceIndentation: None
 ObjCSpaceAfterProperty: true
 ObjCSpaceBeforeProtocolList: false
 ObjCBlockIndentWidth: 4
+ObjCDisableBreakInBlockParameters: true
 PenaltyBreakBeforeFirstCallParameter: 19
 PenaltyBreakComment: 300
 PenaltyBreakString: 1000
@@ -56,4 +57,3 @@ ContinuationIndentWidth: 4
 SpaceBeforeParens: ControlStatements
 DisableFormat:   false
 ...
-
