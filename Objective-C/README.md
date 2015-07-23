@@ -46,6 +46,15 @@ There is an Xcode plugin called [VVDocumenter](https://github.com/onevcat/VVDocu
 ##5. Unit Testing
 Code should be accompanied with a suitable level of unit testing. Ensure you are aware of the expected level and targets of code coverage before you start working on a project. As a minimum, Ordnance Survey expects around 80% code coverage. Style guide and expectations for testing will be documented separately.
 
+### Notes on testing performance
+Unit test code should be written to be as performant as possible. Remember your code is likely to be running on a VM and will have resource limitations. The more performant your code, the quicker your builds will pass and the less likely you will be to have phantom test failures. Following these guidelines can help you keep your tests fast.
+* Avoid asynchronous tests where possible. Particularly in a large test suite, asynchronous tests open you up to potential outside affects caused by waiting for the run loop.
+* Keep autorelease pools in mind. It seems that XCTest will run tests in a fairly tight loop, meaning that any objects added to an autorelease pool may not get deallocated. Avoid adding large pieces of data to an autorelease pool where possible.
+* Split tests in to separate test classes, most likely representing functional areas of the class under test. This seems to split them in to separate runs of the loop, allowing the pool to drain. This will also likely help you understand whether you're adhering to SRP and whether your class under test needs refactoring.
+* Only add things to the class `setUp` method if it truly applies to all the tests in the test case. Otherwise, it's probably better to explicitly set up and tear down those dependencies in the test case. Consider if this is also a code smell to further split either your tests or your target class.
+* For a specific example, some UI tests may require your view controller to be in a `UIWindow` hierarchy. In this situation, make sure only those specific tests have a window. When a window is released it adds its `rootViewController` to an autorelease pool, which can leave large amounts of memory being used.
+* If using MIQTestingFramework, ensure you're using the latest version, which has some memory leak fixes in expecta, specta and OCMock.
+
 ##6. Test code on multiple simulators
 Where appropriate, ensure your code works as expected on all devices. Include results in your pull request. For changes in UI, include screenshots.
 
