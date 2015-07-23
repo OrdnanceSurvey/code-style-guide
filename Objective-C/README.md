@@ -120,10 +120,10 @@ The macros, if not already available in your project, are:
     #define OSDeclareWeak(x) __weak __typeof(x) _dontusemeim_weak_ ## x = x
     #define OSRedeclareStrong(x) __strong __typeof(x) x = _dontusemeim_weak_ ## x
 
-##12. Threading
+##12. Concurrency
 Do not block the main thread. Ensure all long running tasks are moved to background queues. Use `NSOperation` / `NSOperationQueue` and gcd rather than `NSThread`.
 
-Remember starting a thread has its own overhead, so retain the queues you're using for reuse where appropriate.
+Remember starting a thread has its own overhead, so retain the queues you're using for reuse where appropriate. Concurrency also has a significant complexity overhead. Can you run all your code on the main thread? Concurrency leads to complications which may not be required. Write code such that all code that leads to background operations is initiated on the main thread and returns values on the main thread. Keep all concurrency encapsulated.
 
 Core Data is not thread safe. Do not pass `NSManagedObjects` between threads. Use the `performBlock:` methods with a context that has a `NSPrivateQueueConcurrencyType`.
 
