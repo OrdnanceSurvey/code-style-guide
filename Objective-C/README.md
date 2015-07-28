@@ -123,7 +123,7 @@ The macros, if not already available in your project, are:
 ##12. Concurrency
 Do not block the main thread. Ensure all long running tasks are moved to background queues. Use `NSOperation` / `NSOperationQueue` and gcd rather than `NSThread`.
 
-Remember starting a thread has its own overhead, so retain the queues you're using for reuse where appropriate. Concurrency also has a significant complexity overhead. Use the main qeue until performance requires you to move things. Concurrency leads to complications which may not be required. Write code such that all code that leads to background operations is initiated on the main thread and returns values on the main thread. Keep all concurrency encapsulated.
+Remember starting a thread has its own overhead, so retain the queues you're using for reuse where appropriate. Concurrency also has a significant complexity overhead. Use the main queue until performance requires you to move things. Concurrency leads to complications which may not be required. Write code such that all code that leads to background operations is initiated on the main thread and returns values on the main thread. Keep all concurrency encapsulated.
 
 Never fetch a network resource on the main queue. File IO reads and writes are also a likely candidate for being asynchronous, especially if the file is a reasonable size.
 
