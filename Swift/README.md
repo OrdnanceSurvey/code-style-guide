@@ -63,7 +63,7 @@ struct NationalGrid {
 }
 ```
 
-* Computer Properties - Use the short version (i.e. omit the `get {...}` block) if you only need a getter:
+* Computed Properties - Use the short version (i.e. omit the `get {...}` block) if you only need a getter:
 
 ```
 class RandomGenerator {
