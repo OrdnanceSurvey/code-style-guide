@@ -52,6 +52,7 @@ session.dataTaskWithRequest(urlRequest) { (data, response, error) -> Void in
 }
 ```
 rather than
+
 ```
 session.dataTaskWithRequest(urlRequest, completionHandler: { (data: NSData?, response: NSResponse?, error: NSError?) -> Void in
   // Handle response
@@ -63,6 +64,7 @@ session.dataTaskWithRequest(urlRequest, completionHandler: { (data: NSData?, res
 * Favour value types wherever it makes sense, most likely in model objects, but particularly anywhere that doesn't require identity. There is lots of documentation and arguments on the internet, but for the time being, if unsure, follow [Apple's Guidelines](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-ID92)
 
 * Use `guard` and `if let` judiciously. Particularly favour returning early where appropriate.
+
 ```
   guard let activityIndicator = activityIndicator else {
      return
@@ -74,6 +76,7 @@ session.dataTaskWithRequest(urlRequest, completionHandler: { (data: NSData?, res
   addConstraints([leading, trailing, top, bottom])
 ```
 over
+
 ```
   if let activityIndicator = activityIndicator {
     let leading = NSLayoutConstraint(item: activityIndicator, attribute:.Leading, relatedBy: .Equal, toItem: self, attribute: .Leading, multiplier: 1.0, constant: 0.0)
@@ -84,6 +87,7 @@ over
   }
 ```
 For brevity, if referencing something briefly, however, optional chaining is fine:
+
 ```
   activityIndicator?.startAnimating()
 ```
@@ -158,6 +162,7 @@ if let viewController = requiredViewController? {
 * Avoid `try!`. Instead, wrap in `do {...} catch {...}` to provide context.
 
 * For asynchronous APIs, considering using a `Result` type to return values:
+
 ```
 enum Result<T, U> {
   case Success(value: T)
@@ -184,6 +189,7 @@ but be aware this will preclude your API from being accessed by Objective-C. Whe
 * [Nimble](https://github.com/Quick/Nimble) is a nice expectations framework for Swift, along the lines of expecta in Objective-C, but without needing macros.
 * Code should be accompanied with a suitable level of unit testing. Ensure you are aware of the expected level and targets of code coverage before you start working on a project. As a minimum, Ordnance Survey expects around 80% code coverage.
 * OCMock doesn't work well with Swift. Whilst it is possible to use from Objective-C tests on classes inheriting `NSObject`, consider the design of your API before resorting to this. Preferably, define your API using protocols, which will allow you to implement private classes within your test to create mocks and stubs. E.g:
+
 ```
 func testItRequestsAnImage() {
     class MockImageCache: ImageSource {
