@@ -128,7 +128,7 @@ class DownloadService {
 
 ## Access Control
 
-* TODO
+* Mark items as `private` to denote implementation detail. If you find yourself marking a property or method as `internal` or `public` purely to test it, you need to redesign your API. Only a type's public API should be visible outside of the file.
 
 ## Error Handling
 
