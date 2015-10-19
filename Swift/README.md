@@ -180,12 +180,26 @@ but be aware this will preclude your API from being accessed by Objective-C. Whe
 
 ## Testing
 
-* `@testable`
-* `Nimble` framework
-* How to do mocks (i.e. inner classes with overrides)
-* unit tests
-* UI tests
-* coverage
+* `@testable` imports mean you don't need to mark everything as `public`, you can keep the default `internal` access control in most cases.
+* [Nimble](https://github.com/Quick/Nimble) is a nice expectations framework for Swift, along the lines of expecta in Objective-C, but without needing macros.
+* Code should be accompanied with a suitable level of unit testing. Ensure you are aware of the expected level and targets of code coverage before you start working on a project. As a minimum, Ordnance Survey expects around 80% code coverage.
+* OCMock doesn't work well with Swift. Whilst it is possible to use from Objective-C tests on classes inheriting `NSObject`, consider the design of your API before resorting to this. Preferably, define your API using protocols, which will allow you to implement private classes within your test to create mocks and stubs. E.g:
+```
+func testItRequestsAnImage() {
+    class MockImageCache: ImageSource {
+        var receivedURL: NSURL?
+        var completionHandler: ((ImageCacheResult) -> Void)?
+        private func imageForURL(url: NSURL, completion: (ImageCacheResult) -> Void) {
+            receivedURL = url
+            completionHandler = completion
+        }
+    }
+    let mockCache = MockImageCache()
+    dataSource = LaunchStoryCollectionViewDataSource(imageSource: mockCache)
+    // Test and assert
+  }
+}
+```
 
 ## Comments and Documentation
 * Code should be documented and commented as per the suggestions with [Objective-C](../Objective-C/README.md#4-comments), including the tools, which also work in swift.
