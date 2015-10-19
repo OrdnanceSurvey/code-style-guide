@@ -177,7 +177,7 @@ but be aware this will preclude your API from being accessed by Objective-C. Whe
 
 ## Protocol-Oriented design
 
-* TODO
+* Use protocols wherever they make sense, and likely they should be your preferred type initially. See the WWDC session on [protocol oriented programming](https://developer.apple.com/videos/play/wwdc2015-408/). This is a common pattern in other languages, and will make it easier to keep code DRY and to make testing easier..
 
 ## Extenstions and protocol extensions
 
