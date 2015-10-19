@@ -6,7 +6,7 @@ The aim of this document is to promote idiomatic usage of the Swift language, to
 
 ## Code Formatting
 
-* Use clang-format. Spaces, not tabs; 4 spaces per indent; etc.
+* Spaces, not tabs; 4 spaces per indent; braces inline with the preceding statement. We currently have no formatting tools in place, so where possible use Xcode's indentation tools.
 
 * Types in upper camel case. e.g. `MapView`
 
@@ -37,24 +37,60 @@ enum Direction {
 struct GridPoint {
     let easting: Double
     let northing: Double
-    
+
     init(easting: Double, northing: Double) {
         self.easting = easting
         self.northing = northing
     }
 }
 ```
-* Capure list type inference - use whenever possible to avoid overly verbose code. (TODO: add examples)
+* Closure syntax. Use capture list type inference and trailing closures whenever possible to avoid overly verbose code. e.g.
+
+```
+session.dataTaskWithRequest(urlRequest) { (data, response, error) -> Void in
+  // Handle response
+}
+```
+rather than
+```
+session.dataTaskWithRequest(urlRequest, completionHandler: { (data: NSData?, response: NSResponse?, error: NSError?) -> Void in
+  // Handle response
+})
+```
 
 * Use `let` over `var` whenever possible. Consider if your things really needs to be mutable.
 
-* Favour value types wherever it makes sense. (TODO: clarify when it does/doesn't make sense)
+* Favour value types wherever it makes sense, most likely in model objects, but particularly anywhere that doesn't require identity. There is lots of documentation and arguments on the internet, but for the time being, if unsure, follow [Apple's Guidelines](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-ID92)
 
-* `as!` should be considered an error.
+* Use `guard` and `if let` judiciously. Particularly favour returning early where appropriate.
+```
+  guard let activityIndicator = activityIndicator else {
+     return
+  }
+  let leading = NSLayoutConstraint(item: activityIndicator, attribute:.Leading, relatedBy: .Equal, toItem: self, attribute: .Leading, multiplier: 1.0, constant: 0.0)
+  let trailing = NSLayoutConstraint(item: activityIndicator, attribute:.Trailing, relatedBy: .Equal, toItem: self, attribute: .Trailing, multiplier: 1.0, constant: 0.0)
+  let top = NSLayoutConstraint(item: activityIndicator, attribute:.Top, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1.0, constant: 0.0)
+  let bottom = NSLayoutConstraint(item: activityIndicator, attribute:.Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1.0, constant: 0.0)
+  addConstraints([leading, trailing, top, bottom])
+```
+over
+```
+  if let activityIndicator = activityIndicator {
+    let leading = NSLayoutConstraint(item: activityIndicator, attribute:.Leading, relatedBy: .Equal, toItem: self, attribute: .Leading, multiplier: 1.0, constant: 0.0)
+    let trailing = NSLayoutConstraint(item: activityIndicator, attribute:.Trailing, relatedBy: .Equal, toItem: self, attribute: .Trailing, multiplier: 1.0, constant: 0.0)
+    let top = NSLayoutConstraint(item: activityIndicator, attribute:.Top, relatedBy: .Equal, toItem: self, attribute: .Top, multiplier: 1.0, constant: 0.0)
+    let bottom = NSLayoutConstraint(item: activityIndicator, attribute:.Bottom, relatedBy: .Equal, toItem: self, attribute: .Bottom, multiplier: 1.0, constant: 0.0)
+    addConstraints([leading, trailing, top, bottom])
+  }
+```
+For brevity, if referencing something briefly, however, optional chaining is fine:
+```
+  activityIndicator?.startAnimating()
+```
 
-* Use `guard` and `if let` judiciously. (TODO: add examples)
+* `as!` should be considered an error. Use `guard` or `if let` with `as?` and handle the cast failure.
 
-* Constants should be avoided at global level, and instead declared static within the relevant type they correspond to. This allows them to be referenced without an instance of the type, e.g.
+* Constants should be avoided at global level, and instead declared static within the relevant type they correspond to. This allows them to be referenced without an instance of the type, as well as from Objective-C if required, e.g.
 
 ```
 struct NationalGrid {
@@ -108,7 +144,7 @@ class DownloadService {
 
 ```
 guard let viewController = requiredViewController? else {
-    println("Warning: cannot do this without a view controller.")
+    print("Warning: cannot do this without a view controller.")
     return
 }
 doSomething(viewController)
@@ -119,20 +155,24 @@ over:
 if let viewController = requiredViewController? {
     doSomething(viewController)
 } else {
-    println("Warning: cannot do this without a view controller.")
+    print("Warning: cannot do this without a view controller.")
     return
 }
 
 ```
 
-
 * Use `do/try/catch` for anything that may throw an error.
 
 * Avoid `try!`. Instead, wrap in `do {...} catch {...}` to provide context.
 
-* NSError
-
-* return values
+* For asynchronous APIs, considering using a `Result` type to return values:
+```
+enum Result<T, U> {
+  case Success(value: T)
+  case Failure(error: U)
+}
+```
+but be aware this will preclude your API from being accessed by Objective-C. Where that is necessary, use a closure that returns an optional success and failure values
 
 ## Paradigm choice
 
@@ -144,7 +184,7 @@ if let viewController = requiredViewController? {
 
 ## Extenstions and protocol extensions
 
-* Methods and properties that are 
+* Methods and properties that are
 
 ## Testing
 
@@ -156,7 +196,6 @@ if let viewController = requiredViewController? {
 * coverage
 
 ## Comments and Documentation
-* Use `VVDocumenter` plugin.
-* Document all public interface.
+* Code should be documented and commented as per the suggestions with [Objective-C](../Objective-C/README.md#4-comments), including the tools, which also work in swift.
 * Code should be as self-documenting as possible. Use descriptive names for types, properties, methods. Follow Cocoa conventions as closely as possible when dealing with e.g. `UIKit`, and Swift standard library conventions when dealing with pure Swift code.
 * Document anything that is non-obvious, hack-like, strange or a workaround.
