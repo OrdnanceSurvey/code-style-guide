@@ -130,14 +130,6 @@ class DownloadService {
 
 * TODO
 
-## Block capture semantics
-
-* TODO: `unowned` vs `weak`
-
-## Optionals
-
-* TODO
-
 ## Error Handling
 
 * Use `guard` to fail or return fast in a method over the more verbose `if let`, e.g:
