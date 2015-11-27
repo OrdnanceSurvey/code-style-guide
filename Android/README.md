@@ -58,13 +58,25 @@ For these two IDE's there are some shortcuts to help with fixing issues with che
 
 Optimise Imports:
 
-    ctrl + alt + o
+Mac - 
+
+    ctrl + alt + O
+
+Windows -
+
+    Ctrl + Alt + O
 
 Optimise Code:
 
-    alt + cmd + l
+Mac -
+    
+    alt + cmd + L
 
+Windows -
 
+    Ctrl + Alt + L
+    
+For more keyboard shortcuts for these IDE's choose Help | Default Keymap Reference from the main menu.
 
 
 
