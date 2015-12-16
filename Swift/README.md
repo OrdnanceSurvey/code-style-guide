@@ -173,10 +173,6 @@ enum Result<T, U> {
 ```
 but be aware this will preclude your API from being accessed by Objective-C. Where that is necessary, use a closure that returns an optional success and failure values
 
-## Paradigm choice
-
-* TODO: cover functional, object-oriented, procedural, metaprogramming and suitable usage scenarios for each.
-
 ## Protocol-Oriented design
 
 * Use protocols wherever they make sense, and likely they should be your preferred type initially. See the WWDC session on [protocol oriented programming](https://developer.apple.com/videos/play/wwdc2015-408/). This is a common pattern in other languages, and will make it easier to keep code DRY and to make testing easier..
