@@ -181,9 +181,12 @@ but be aware this will preclude your API from being accessed by Objective-C. Whe
 
 * Use protocols wherever they make sense, and likely they should be your preferred type initially. See the WWDC session on [protocol oriented programming](https://developer.apple.com/videos/play/wwdc2015-408/). This is a common pattern in other languages, and will make it easier to keep code DRY and to make testing easier..
 
-## Extenstions and protocol extensions
+## MVVM
+* Where appropriate, use an [MVVM](https://en.wikipedia.org/wiki/Model–view–viewmodel) pattern rather than a traditional MVC pattern to architect your apps. MVVM allows for cleaner, more testable code. A binding framework will to take full advantage of the pattern. Currently, we suggest using [Swift Bond](https://github.com/SwiftBond/Bond), but may change this recommendation if other libraries look better suited.
 
-* Methods and properties that are
+## Extensions and protocol extensions
+
+Use extensions liberally. They are a good way to separate logical pieces of code, indicate protocol conformance, provide default functionality (particularly for protocol extensions), or help separate and define test cases. When extending classes with new functionality, particularly if extending framework classes, create the extension in a separate file.
 
 ## Testing
 
