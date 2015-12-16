@@ -47,7 +47,7 @@ struct GridPoint {
 * Closure syntax. Use capture list type inference and trailing closures whenever possible to avoid overly verbose code. e.g.
 
 ```
-session.dataTaskWithRequest(urlRequest) { (data, response, error) -> Void in
+session.dataTaskWithRequest(urlRequest) { (data, response, error) in
   // Handle response
 }
 ```
