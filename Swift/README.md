@@ -47,7 +47,7 @@ struct GridPoint {
 * Closure syntax. Use capture list type inference and trailing closures whenever possible to avoid overly verbose code. e.g.
 
 ```
-session.dataTaskWithRequest(urlRequest) { (data, response, error) -> Void in
+session.dataTaskWithRequest(urlRequest) { (data, response, error) in
   // Handle response
 }
 ```
@@ -58,6 +58,8 @@ session.dataTaskWithRequest(urlRequest, completionHandler: { (data: NSData?, res
   // Handle response
 })
 ```
+
+* Prefer to capture `self` as `unowned` over `weak` wherever possible. `unowned` is likely to be enough to safely break most retain cycles without needing to resort to optional chaining of `self` or to create a new `strongSelf` variable. `unowned` is [faster](https://twitter.com/jckarter/status/654819932962598913). This doesn't mean there aren't times when `weak` is the correct option, so ensure you understand the [difference](http://krakendev.io/blog/weak-and-unowned-references-in-swift). For any short lived closure, for example an animation block, the chances are you don't need any specific capture semantics at all.
 
 * Use `let` over `var` whenever possible. Consider if your things really needs to be mutable.
 
