@@ -78,7 +78,61 @@ Windows -
     
 For more keyboard shortcuts for these IDE's choose Help | Default Keymap Reference from the main menu.
 
+##3. Static Analysis
 
+### Android Lint
+
+TODO:
+
+### PMD
+All Android projects (and accompanying OS produced Java libraries) will use the pmd plugin in Gradle to help analyse the project code base.
+
+There is a pmd ruleset file to be used in Android. This is located in the pmd folder in this repository.
+
+[PMD Ruleset](https://github.com/OrdnanceSurvey/mobile-code-style-guide/tree/android/Android/pmd)
+
+In the application build.gradle file apply the pmd plugin:
+
+    apply plugin: 'pmd'
+    
+Add the following custom task to the build.gradle file, making sure that all class exclusions are 
+set here:
+````
+task pmd(type: Pmd) {
+    group = "Reporting"
+
+    description = "Generate Static Analysis reports"
+
+    ruleSetFiles = files("${project.rootDir}/config/pmd/pmd-ruleset.xml")
+    ignoreFailures = false
+    ruleSets = []
+
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+    // exclude 3rd party or generated code
+    exclude '<Insert Path to 3rd party code here>'
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+        html {
+            destination "$project.buildDir/reports/pmd/pmd.html"
+        }
+        xml {
+           destination "$project.buildDir/reports/pmd/pmd.xml" 
+        }
+    }
+}
+````
+
+The task assumes that the rules xml files will be located in a specific location:
+
+    projectRoot/config/pmd/
+
+Once the gradle sync is completed the pmd task can be run using the following gradle command:
+
+    ./gradlew pmd
 
 
 
