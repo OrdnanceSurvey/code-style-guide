@@ -4,7 +4,7 @@ The aim of this document is to ensure a consistent style guide across our code b
 These guidelines were agreed by the team, and based off of the [Android Code Style Guidelines for Contributors](https://source.android.com/source/code-style.html)
 
 ##1. Gradle
-All Android projects (and accompanying OS produced Java libraries) are to be built using Gradle and structured as per the defaults for those project types. This is to ensure that all builds are prepared, tested and deployed with a consistent set of methods and plugins.
+All Android projects (including Java libraries developed for use with Android) are to be built using Gradle and structured as per the defaults for those project types. This is to ensure that all builds are prepared, tested and deployed with a consistent set of methods and plugins.
 Where appropriate repeated build logic will be moved into Gradle plugins for use within OS projects.
 
 Android Studio will create a Gradle structured project by default. 
@@ -14,44 +14,33 @@ For developers moving from and Maven or Ant based build the following documentat
 [Gradle - Getting Started Android](https://gradle.org/getting-started-android/)
 
 ##2. Consistent Code Base
-All Android projects (and accompanying OS produced Java libraries) will use the checkstyle plugin in Gradle to ensure consistency across our code base.
 
-There are two checkstyle rules files that are to be used in Android. These are located in the checkstyle folder in this repository.
+There are a range of checks made against OS Android projects using the base Gradle Quality checks configured for usage with the Android Gradle Plugin.
 
-[Checkstyle Rules](https://github.com/OrdnanceSurvey/mobile-code-style-guide/tree/android/Android/checkstyle)
+These are:
+- Checkstyle
+- Findbugs
+- PMD
+- Android Lint
+- Unit Testing
+- Jacoco Unit Test Coverage
+- AndroidTest
+- AndroidTest Coverage
 
-Android does not support using the default checkstyle configuration so a custom Android set up is required.
+To aid the configuration and usage of these checks an android gradle plugin has been developed.
 
-In the application build.gradle file apply the checkstyle plugin:
+[Gradle Plugin - Android Checks](https://github.com/OrdnanceSurvey/gradle-plugin-android-checks)
 
-    apply plugin: 'checkstyle'
-    
-Add the following custom task to the build.gradle file:
-````
-task checkstyle(type: Checkstyle) {
-    group = "Reporting"
+The information on how to implement and configure this plugin are contained in the plugin README.
 
-    description = "Generate Checkstyle reports"
+All Android projects (including Java libraries developed for use with Android) will use this plugin to ensure consistency of checks across projects.
 
-    configFile new File("${project.rootDir}/config/checkstyle/checkstyle.xml")
-    configProperties.checkstyleConfigDir = new File("${project.rootDir}/config", 'checkstyle')
-    source 'src'
-    include '**/*.java'
-    exclude '**/gen/**'
-    // empty classpath
-    classpath = files()
-    //Do not fail build
-    ignoreFailures = true
-}
-````
+As part of the configuration of the plugin any rule-sets used should be drawn from the guidelines described here.
 
-The task assumes that the rules xml files will be located in a specific location:
+### Rules / Exceptions
 
-    projectRoot/config/checkstyle/
-
-Once the gradle sync is completed the checkstyle task can be run using the following gradle command:
-
-    ./gradlew checkstyle
+- [Checkstyle Rules](https://github.com/OrdnanceSurvey/code-style-guide/tree/android/Android/checkstyle)
+- [PMD Rules](https://github.com/OrdnanceSurvey/code-style-guide/tree/android/Android/pmd)
 
 ### Intellij and Android Studio
 For these two IDE's there are some shortcuts to help with fixing issues with checkstyle. The following two commands when applied to any .java and Android xml file will eliminate the majority of checkstyle issues:
@@ -77,62 +66,3 @@ Windows -
     Ctrl + Alt + L
     
 For more keyboard shortcuts for these IDE's choose Help | Default Keymap Reference from the main menu.
-
-##3. Static Analysis
-
-### Android Lint
-
-TODO:
-
-### PMD
-All Android projects (and accompanying OS produced Java libraries) will use the pmd plugin in Gradle to help analyse the project code base.
-
-There is a pmd ruleset file to be used in Android. This is located in the pmd folder in this repository.
-
-[PMD Ruleset](https://github.com/OrdnanceSurvey/mobile-code-style-guide/tree/android/Android/pmd)
-
-In the application build.gradle file apply the pmd plugin:
-
-    apply plugin: 'pmd'
-    
-Add the following custom task to the build.gradle file, making sure that all class exclusions are 
-set here:
-````
-task pmd(type: Pmd) {
-    group = "Reporting"
-
-    description = "Generate Static Analysis reports"
-
-    ruleSetFiles = files("${project.rootDir}/config/pmd/pmd-ruleset.xml")
-    ignoreFailures = false
-    ruleSets = []
-
-    source 'src'
-    include '**/*.java'
-    exclude '**/gen/**'
-    // exclude 3rd party or generated code
-    exclude '<Insert Path to 3rd party code here>'
-
-    reports {
-        xml.enabled = true
-        html.enabled = true
-        html {
-            destination "$project.buildDir/reports/pmd/pmd.html"
-        }
-        xml {
-           destination "$project.buildDir/reports/pmd/pmd.xml" 
-        }
-    }
-}
-````
-
-The task assumes that the rules xml files will be located in a specific location:
-
-    projectRoot/config/pmd/
-
-Once the gradle sync is completed the pmd task can be run using the following gradle command:
-
-    ./gradlew pmd
-
-
-
