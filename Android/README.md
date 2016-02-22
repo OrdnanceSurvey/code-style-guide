@@ -39,8 +39,8 @@ As part of the configuration of the plugin any rule-sets used should be drawn fr
 
 ### Rules / Exceptions
 
-- [Checkstyle Rules](https://github.com/OrdnanceSurvey/code-style-guide/tree/android/Android/checkstyle)
-- [PMD Rules](https://github.com/OrdnanceSurvey/code-style-guide/tree/android/Android/pmd)
+- [Checkstyle Rules](https://github.com/OrdnanceSurvey/code-style-guide/tree/master/Android/checkstyle)
+- [PMD Rules](https://github.com/OrdnanceSurvey/code-style-guide/tree/master/Android/pmd)
 
 ### Intellij and Android Studio
 For these two IDE's there are some shortcuts to help with fixing issues with checkstyle. The following two commands when applied to any .java and Android xml file will eliminate the majority of checkstyle issues:
