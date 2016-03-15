@@ -11,8 +11,4 @@
     <suppress checks="." files="Manifest.java" />
     <suppress checks="." files="R.java" />
     <suppress checks="." files="BuildConfig.java" />
-    <suppress checks="InterfaceIsTypeCheck|MultipleStringLiteralsCheck"
-        files="OsMapsContract.java" />
-    <!-- Suppress OS Maps SDK -->
-    <suppress checks="." files="uk[\\/]co[\\/]ordnancesurvey[\\/]android[\\/]maps[\\/]"/>
 </suppressions>
