@@ -61,7 +61,7 @@ session.dataTaskWithRequest(urlRequest, completionHandler: { (data: NSData?, res
 
 * Prefer to capture `self` as `unowned` over `weak` wherever possible. `unowned` is likely to be enough to safely break most retain cycles without needing to resort to optional chaining of `self` or to create a new `strongSelf` variable. `unowned` is [faster](https://twitter.com/jckarter/status/654819932962598913). This doesn't mean there aren't times when `weak` is the correct option, so ensure you understand the [difference](http://krakendev.io/blog/weak-and-unowned-references-in-swift). For any short lived closure, for example an animation block, the chances are you don't need any specific capture semantics at all.
 
-* Use `let` over `var` whenever possible. Consider if your things really needs to be mutable.
+* Use `let` over `var` whenever possible. Consider if your things really need to be mutable.
 
 * Favour value types wherever it makes sense, most likely in model objects, but particularly anywhere that doesn't require identity. There is lots of documentation and arguments on the internet, but for the time being, if unsure, follow [Apple's Guidelines](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-ID92)
 
