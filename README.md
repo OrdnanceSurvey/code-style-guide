@@ -1,6 +1,6 @@
 #Ordnance Survey Code Style Guidelines
 
-This repository contains style guides for languages used by Ordnance Survey to be followed by 3rd party developers.
+This repository contains style guides for languages used by Ordnance Survey.
 
 ##Contents
 
