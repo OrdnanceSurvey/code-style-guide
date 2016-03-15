@@ -115,15 +115,6 @@ class RandomGenerator {
 }
 ```
 
-* Converting instances - use `init()` methods, as per the convention set forth in the Swift standard library, e.g. (TODO: come up with a more relevant example)
-
-```
-extension NSColor {
-    convenience init(_ mood: Mood) {
-        super.init(color: NSColor.blueColor)
-    }
-}
-```
 * Singletons - If you think you need to use a singleton, think long and hard. Usually, the problem can be solved in a more elegant way. That said, if you really need one, a singleton in Swift is simple to implement and thread safe by default (unlike Objective-C):
 
 ```
