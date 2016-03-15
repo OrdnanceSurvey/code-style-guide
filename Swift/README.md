@@ -150,7 +150,7 @@ if let viewController = requiredViewController? {
 
 ```
 
-* Use `do/try/catch` for anything that may throw an error.
+* Use `do/try/catch` for anything that will be called synchronously and may throw an error.
 
 * Avoid `try!`. Instead, wrap in `do {...} catch {...}` to provide context.
 
@@ -162,7 +162,7 @@ enum Result<T, U> {
   case Failure(error: U)
 }
 ```
-but be aware this will preclude your API from being accessed by Objective-C. Where that is necessary, use a closure that returns an optional success and failure values
+but be aware this will preclude your API from being accessed by Objective-C. Where that is necessary, use a closure that returns an optional success and failure values.
 
 ## Protocol-Oriented design
 
