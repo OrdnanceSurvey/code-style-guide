@@ -184,6 +184,7 @@ Use extensions liberally. They are a good way to separate logical pieces of code
 
 ```
 func testItRequestsAnImage() {
+    
     class MockImageCache: ImageSource {
         var receivedURL: NSURL?
         var completionHandler: ((ImageCacheResult) -> Void)?
@@ -192,6 +193,7 @@ func testItRequestsAnImage() {
             completionHandler = completion
         }
     }
+    
     let mockCache = MockImageCache()
     dataSource = LaunchStoryCollectionViewDataSource(imageSource: mockCache)
     // Test and assert
