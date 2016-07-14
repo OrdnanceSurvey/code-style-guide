@@ -61,7 +61,7 @@ session.dataTaskWithRequest(urlRequest, completionHandler: { (data: NSData?, res
 
 * Prefer to capture `self` as `unowned` over `weak` wherever possible. `unowned` is likely to be enough to safely break most retain cycles without needing to resort to optional chaining of `self` or to create a new `strongSelf` variable. `unowned` is [faster](https://twitter.com/jckarter/status/654819932962598913). This doesn't mean there aren't times when `weak` is the correct option, so ensure you understand the [difference](http://krakendev.io/blog/weak-and-unowned-references-in-swift). For any short lived closure, for example an animation block, the chances are you don't need any specific capture semantics at all.
 
-* Use `let` over `var` whenever possible. Consider if your things really needs to be mutable.
+* Use `let` over `var` whenever possible. Consider if your things really need to be mutable.
 
 * Favour value types wherever it makes sense, most likely in model objects, but particularly anywhere that doesn't require identity. There is lots of documentation and arguments on the internet, but for the time being, if unsure, follow [Apple's Guidelines](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ClassesAndStructures.html#//apple_ref/doc/uid/TP40014097-CH13-ID92)
 
@@ -115,15 +115,6 @@ class RandomGenerator {
 }
 ```
 
-* Converting instances - use `init()` methods, as per the convention set forth in the Swift standard library, e.g. (TODO: come up with a more relevant example)
-
-```
-extension NSColor {
-    convenience init(_ mood: Mood) {
-        super.init(color: NSColor.blueColor)
-    }
-}
-```
 * Singletons - If you think you need to use a singleton, think long and hard. Usually, the problem can be solved in a more elegant way. That said, if you really need one, a singleton in Swift is simple to implement and thread safe by default (unlike Objective-C):
 
 ```
@@ -159,7 +150,7 @@ if let viewController = requiredViewController? {
 
 ```
 
-* Use `do/try/catch` for anything that may throw an error.
+* Use `do/try/catch` for anything that will be called synchronously and may throw an error.
 
 * Avoid `try!`. Instead, wrap in `do {...} catch {...}` to provide context.
 
@@ -171,7 +162,7 @@ enum Result<T, U> {
   case Failure(error: U)
 }
 ```
-but be aware this will preclude your API from being accessed by Objective-C. Where that is necessary, use a closure that returns an optional success and failure values
+but be aware this will preclude your API from being accessed by Objective-C. Where that is necessary, use a closure that returns an optional success and failure values.
 
 ## Protocol-Oriented design
 
@@ -193,6 +184,7 @@ Use extensions liberally. They are a good way to separate logical pieces of code
 
 ```
 func testItRequestsAnImage() {
+    
     class MockImageCache: ImageSource {
         var receivedURL: NSURL?
         var completionHandler: ((ImageCacheResult) -> Void)?
@@ -201,6 +193,7 @@ func testItRequestsAnImage() {
             completionHandler = completion
         }
     }
+    
     let mockCache = MockImageCache()
     dataSource = LaunchStoryCollectionViewDataSource(imageSource: mockCache)
     // Test and assert
